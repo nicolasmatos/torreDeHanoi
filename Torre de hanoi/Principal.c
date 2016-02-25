@@ -20,6 +20,9 @@ void solucao(int d, char ori, char dest, char aux) {
 void solucao(Pilha * p1, Pilha * p2, Pilha * p3, int qtdDiscos) {
 }
 
+void reiniciarJogo(Pilha * p1, Pilha * p2, Pilha * p3) {
+}
+
 void mostraPinos(Pilha * p1, Pilha * p2, Pilha * p3) {
 	printf("Pino 1: ");
 	imprimir(p1);
@@ -103,14 +106,15 @@ int main() {
 	Pilha * p3 = criar();
 	int discos = 0, opcao = 1, origem, destino, i;
 
-	while (opcao != 6) {
+	while (opcao != 7) {
 		printf("================================Menu de opcaoes================================\n");
 		printf("1\. Inicializar os pinos\n"
 			   "2\. Realizar jogada\n"
 			   "3\. Listar movimentos\n"
 			   "4\. Mostrar solucao\n"
 			   "5\. Mostrar situacao dos pinos\n"
-			   "6\. Sair do programa\n");
+			   "6\. Reiniciar o jogo\n"
+			   "7\. Sair do programa\n");
 		printf("===============================================================================\n");
 		printf("\nQual opcao do menu deseja executar?\n");
 		scanf("%d", &opcao);
@@ -208,6 +212,15 @@ int main() {
 			mostraPinos(p1, p2, p3);
 		}
 		else if (opcao == 6) {
+			system("cls");
+			printf("--------------------------\n"
+				"|                        |\n"
+				"|    Jogo reiniciado     |\n"
+				"|                        |\n"
+				"--------------------------\n");
+			reiniciarJogo(p1, p2, p3);
+		}
+		else if (opcao == 7) {
 			system("cls");
 			printf("\n\n============================");
 			printf("A operacao foi encerrada.");

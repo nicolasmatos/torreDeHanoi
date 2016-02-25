@@ -33,6 +33,4 @@ para o pino 3. (Obs: item opcional, ganha um ponto extra na nota do trabalho se 
 
 7. Sair do programa
 
-                                        
-
-#pilha #empilhar #desempilhar #topo #tamanho 
+                                        #pilha #empilhar #desempilhar #topo #tamanho 

@@ -17,22 +17,35 @@ void solucao(int d, char ori, char dest, char aux) {
 }
 */
 
-void solucao(Pilha * p1, Pilha * p2, Pilha * p3, int qtdDiscos) {
+void solucao(int qtdDiscos, Pilha * pOri, Pilha * pDest, Pilha * pAux) {
+	if (qtdDiscos == 1) {
+		empilhar(pDest, desempilhar(pOri));
+	}
+	else {
+		solucao(qtdDiscos - 1, pOri, pAux, pDest);
+		empilhar(pDest, desempilhar(pOri));
+		solucao(qtdDiscos - 1, pAux, pDest, pOri);
+	}
 }
 
 void reiniciarJogo(Pilha * p1, Pilha * p2, Pilha * p3, int qtdDiscos) {
 	int i;
-	while (tamanho(p1) != 0) {
-		desempilhar(p1);
+	if (qtdDiscos != 0) {
+		while (tamanho(p1) != 0) {
+			desempilhar(p1);
+		}
+		while (tamanho(p2) != 0) {
+			desempilhar(p2);
+		}
+		while (tamanho(p3) != 0) {
+			desempilhar(p3);
+		}
+		for (i = 0; i < qtdDiscos; i++) {
+			empilhar(p1, qtdDiscos - i);
+		}
 	}
-	while (tamanho(p2) != 0) {
-		desempilhar(p2);
-	}
-	while (tamanho(p3) != 0) {
-		desempilhar(p3);
-	}
-	for (i = 0; i < qtdDiscos; i++) {
-		empilhar(p1, qtdDiscos - i);
+	else {
+		printf("Os discos ainda nao foram inicializados.\n");
 	}
 }
 
@@ -48,7 +61,10 @@ void mostraPinos(Pilha * p1, Pilha * p2, Pilha * p3) {
 
 void verificaMovimento(Pilha * pOri, Pilha * pDest, Pilha * p3, int numDiscos) {
 	if (numDiscos != 0) {
-		if ((topo(pOri) < topo(pDest)) || (topo(pDest) == -1)) {
+		if (topo(pOri) == -1) {
+			printf("\nMovimento invalido.\n\n");
+		}
+		else if ((topo(pOri) < topo(pDest)) || (topo(pDest) == -1)) {
 			empilhar(pDest, desempilhar(pOri));
 			/*printf("\nOrigem.\n\n");
 			imprimir(pOri);
@@ -120,7 +136,7 @@ int main() {
 	int discos = 0, opcao = 1, origem, destino, i;
 
 	while (opcao != 7) {
-		printf("================================Menu de opcaoes================================\n");
+		printf("================================Menu de opcoes================================\n");
 		printf("1\. Inicializar os pinos\n"
 			   "2\. Realizar jogada\n"
 			   "3\. Listar movimentos\n"
@@ -213,7 +229,7 @@ int main() {
 				"|    Mostrar solucao     |\n"
 				"|                        |\n"
 				"--------------------------\n");
-			solucao(p1, p2, p3, discos);
+			solucao(discos, p1, p2, p3);
 		}
 		else if (opcao == 5) {
 			system("cls");
@@ -232,6 +248,7 @@ int main() {
 				"|                        |\n"
 				"--------------------------\n");
 			reiniciarJogo(p1, p2, p3, discos);
+			mostraPinos(p1, p2, p3);
 		}
 		else if (opcao == 7) {
 			system("cls");

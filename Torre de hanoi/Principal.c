@@ -229,7 +229,7 @@ int main() {
 				"|    Mostrar solucao     |\n"
 				"|                        |\n"
 				"--------------------------\n");
-			solucao(discos, p1, p2, p3);
+			solucao(discos, p1, p3, p2);
 		}
 		else if (opcao == 5) {
 			system("cls");

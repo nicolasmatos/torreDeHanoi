@@ -20,7 +20,20 @@ void solucao(int d, char ori, char dest, char aux) {
 void solucao(Pilha * p1, Pilha * p2, Pilha * p3, int qtdDiscos) {
 }
 
-void reiniciarJogo(Pilha * p1, Pilha * p2, Pilha * p3) {
+void reiniciarJogo(Pilha * p1, Pilha * p2, Pilha * p3, int qtdDiscos) {
+	int i;
+	while (tamanho(p1) != 0) {
+		desempilhar(p1);
+	}
+	while (tamanho(p2) != 0) {
+		desempilhar(p2);
+	}
+	while (tamanho(p3) != 0) {
+		desempilhar(p3);
+	}
+	for (i = 0; i < qtdDiscos; i++) {
+		empilhar(p1, qtdDiscos - i);
+	}
 }
 
 void mostraPinos(Pilha * p1, Pilha * p2, Pilha * p3) {
@@ -218,7 +231,7 @@ int main() {
 				"|    Jogo reiniciado     |\n"
 				"|                        |\n"
 				"--------------------------\n");
-			reiniciarJogo(p1, p2, p3);
+			reiniciarJogo(p1, p2, p3, discos);
 		}
 		else if (opcao == 7) {
 			system("cls");

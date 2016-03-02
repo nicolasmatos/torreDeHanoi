@@ -17,17 +17,6 @@ void solucao(int d, char ori, char dest, char aux) {
 }
 */
 
-void solucao(int qtdDiscos, Pilha * pOri, Pilha * pDest, Pilha * pAux) {
-	if (qtdDiscos == 1) {
-		empilhar(pDest, desempilhar(pOri));
-	}
-	else {
-		solucao(qtdDiscos - 1, pOri, pAux, pDest);
-		empilhar(pDest, desempilhar(pOri));
-		solucao(qtdDiscos - 1, pAux, pDest, pOri);
-	}
-}
-
 void reiniciarJogo(Pilha * p1, Pilha * p2, Pilha * p3, int qtdDiscos) {
 	int i;
 	if (qtdDiscos != 0) {
@@ -126,6 +115,20 @@ void listaMovimentos(Pilha * p1, Pilha * p2, Pilha * p3) {
 		else if (topo(p3) == -1 && topo(p2) != -1) {
 			printf("Mover de 'p2' para 'p3'\n");
 		}
+	}
+}
+
+void solucao(int qtdDiscos, Pilha * pOri, Pilha * pDest, Pilha * pAux) {
+	if (qtdDiscos == 1) {
+		empilhar(pDest, desempilhar(pOri));
+		printf("");
+	}
+	else {
+		solucao(qtdDiscos - 1, pOri, pAux, pDest);
+		empilhar(pDest, desempilhar(pOri));
+		printf("");
+		solucao(qtdDiscos - 1, pAux, pDest, pOri);
+
 	}
 }
 

@@ -3,19 +3,13 @@
 #include <stdlib.h>
 #include "Pilha.h"
 
-/*
-void solucao(int d, char ori, char dest, char aux) {
-	if (d == 1) {
-		printf("Mover disco %d de %c para %c\n", d, ori, dest);
-	}
-	else {
-		solucao(d - 1, ori, aux, dest);
-		printf("Mover disco %d de %c para %c\n", d, ori, dest);
-		solucao(d - 1, aux, dest, ori);
-	}
 
-}
-*/
+struct pino {
+	Pilha * pilha;
+	char nome;
+};
+
+typedef struct pino Pino;
 
 void reiniciarJogo(Pilha * p1, Pilha * p2, Pilha * p3, int qtdDiscos) {
 	int i;
@@ -39,114 +33,190 @@ void reiniciarJogo(Pilha * p1, Pilha * p2, Pilha * p3, int qtdDiscos) {
 }
 
 void mostraPinos(Pilha * p1, Pilha * p2, Pilha * p3) {
-	printf("Pino 1: ");
+	printf("Pino 'A': ");
 	imprimir(p1);
-	printf("\nPino 2: ");
+	printf("\nPino 'B': ");
 	imprimir(p2);
-	printf("\nPino 3: ");
+	printf("\nPino 'C': ");
 	imprimir(p3);
 	printf("\n");
 }
 
-void verificaMovimento(Pilha * pOri, Pilha * pDest, Pilha * p3, int numDiscos) {
+void verificaMovimento(Pino * pOri, Pino * pDest, Pino * p3, int numDiscos) {
 	if (numDiscos != 0) {
-		if (topo(pOri) == -1) {
+		if (topo(pOri->pilha) == -1) {
 			printf("\nMovimento invalido.\n\n");
 		}
-		else if ((topo(pOri) < topo(pDest)) || (topo(pDest) == -1)) {
-			empilhar(pDest, desempilhar(pOri));
-			/*printf("\nOrigem.\n\n");
-			imprimir(pOri);
-			printf("\nDestino\n\n");
-			imprimir(pDest);*/
+		else if ((topo(pOri->pilha) < topo(pDest->pilha)) || (topo(pDest->pilha) == -1)) {
+			empilhar(pDest->pilha, desempilhar(pOri->pilha));
 		}
 		else {
 			printf("\nMovimento invalido.\n\n");
 		}
-		if (tamanho(pDest) == numDiscos && pDest == p3) {
+		if (tamanho(pDest->pilha) == numDiscos && pDest->pilha == p3->pilha) {
 			printf("Parabens jogo finalizado. E sera reiniciado.\n");
-			//reiniciarJogo();
+			if (pOri->nome == 'A') {
+				if (pDest->nome == 'B') {
+					reiniciarJogo(pOri->pilha, pDest->pilha, p3->pilha, numDiscos);
+				}
+				else {
+					reiniciarJogo(pOri->pilha, p3->pilha, pDest->pilha, numDiscos);
+				}
+			}
+			else if (pDest->nome == 'A') {
+				if (pOri->nome == 'B') {
+					reiniciarJogo(pDest->pilha, pOri->pilha, p3->pilha, numDiscos);
+				}
+				else {
+					reiniciarJogo(pDest->pilha, p3->pilha, pOri->pilha, numDiscos);
+				}
+			}
+			else {
+				if (pOri->nome == 'B') {
+					reiniciarJogo(p3->pilha, pOri->pilha, pDest->pilha, numDiscos);
+				}
+				else {
+					reiniciarJogo(p3->pilha, pDest->pilha, pOri->pilha, numDiscos);
+				}
+			}
 		}
-	}
-	else {
-		printf("Os discos ainda nao foram inicializados.\n");
+		else {
+			printf("Os discos ainda nao foram inicializados.\n");
+		}
 	}
 }
 
 void listaMovimentos(Pilha * p1, Pilha * p2, Pilha * p3) {
 	if (topo(p1) < topo(p2) && topo(p1) != -1 && topo(p2) != -1) {
-		printf("Mover de 'p1' para 'p2'\n");
+		printf("Mover de 'A' para 'B'\n");
 	}
 	else {
 		if (topo(p2) < topo(p1) && topo(p1) != -1 && topo(p2) != -1) {
-			printf("Mover de 'p2' para 'p1'\n");
+			printf("Mover de 'B' para 'A'\n");
 		}
 		else if (topo(p1) == -1 && topo(p2) != -1) {
-			printf("Mover de 'p2' para 'p1'\n");
+			printf("Mover de 'B' para 'A'\n");
 		}
 		else if (topo(p2) == -1 && topo(p1) != -1) {
-			printf("Mover de 'p1' para 'p2'\n");
+			printf("Mover de 'A' para 'B'\n");
 		}
 	}
 	if (topo(p1) < topo(p3) && topo(p1) != -1 && topo(p3) != -1) {
-		printf("Mover de 'p1' para 'p3'\n");
+		printf("Mover de 'A' para 'C'\n");
 	}
 	else {
 		if (topo(p3) < topo(p1) && topo(p1) != -1 && topo(p3) != -1) {
-			printf("Mover de 'p3' para 'p1'\n");
+			printf("Mover de 'C' para 'A'\n");
 		}
 		else if (topo(p1) == -1 && topo(p3) != -1) {
-			printf("Mover de 'p3' para 'p1'\n");
+			printf("Mover de 'C' para 'A'\n");
 		}
 		else if (topo(p3) == -1 && topo(p1) != -1) {
-			printf("Mover de 'p1' para 'p3'\n");
+			printf("Mover de 'A' para 'C'\n");
 		}
 	}
 	if (topo(p2) < topo(p3) && topo(p2) != -1 && topo(p3) != -1) {
-		printf("Mover de 'p2' para 'p3'\n");
+		printf("Mover de 'B' para 'C'\n");
 	}
 	else {
 		if (topo(p3) < topo(p2) && topo(p2) != -1 && topo(p3) != -1) {
-			printf("Mover de 'p3' para 'p2'\n");
+			printf("Mover de 'C' para 'B'\n");
 		}
 		else if (topo(p2) == -1 && topo(p3) != -1) {
-			printf("Mover de 'p3' para 'p2'\n");
+			printf("Mover de 'C' para 'B'\n");
 		}
 		else if (topo(p3) == -1 && topo(p2) != -1) {
-			printf("Mover de 'p2' para 'p3'\n");
+			printf("Mover de 'B' para 'C'\n");
 		}
 	}
 }
 
-void solucao(int qtdDiscos, Pilha * pOri, Pilha * pDest, Pilha * pAux) {
+void solucao(int qtdDiscos, Pino * pOri, Pino * pDest, Pino * pAux) {
 	if (qtdDiscos == 1) {
-		empilhar(pDest, desempilhar(pOri));
-		printf("");
+		empilhar(pDest->pilha, desempilhar(pOri->pilha));
+		printf("Mover do pino %c para o pino %c\n", pOri->nome, pDest->nome);
 	}
 	else {
 		solucao(qtdDiscos - 1, pOri, pAux, pDest);
-		empilhar(pDest, desempilhar(pOri));
-		printf("");
+		if (pOri->nome == 'A') {
+			if (pDest->nome == 'B') {
+				mostraPinos(pOri->pilha, pDest->pilha, pAux->pilha);
+			}
+			else {
+				mostraPinos(pOri->pilha, pAux->pilha, pDest->pilha);
+			}
+		}
+		else if (pDest->nome == 'A') {
+			if (pOri->nome == 'B') {
+				mostraPinos(pDest->pilha, pOri->pilha, pAux->pilha);
+			}
+			else {
+				mostraPinos(pDest->pilha, pAux->pilha, pOri->pilha);
+			}
+		}
+		else {
+			if (pOri->nome == 'B') {
+				mostraPinos(pAux->pilha, pOri->pilha, pDest->pilha);
+			}
+			else {
+				mostraPinos(pAux->pilha, pDest->pilha, pOri->pilha);
+			}
+		}
+		empilhar(pDest->pilha, desempilhar(pOri->pilha));
+		printf("Mover do pino %c para o pino %c\n", pOri->nome, pDest->nome);
+		if (pOri->nome == 'A') {
+			if (pDest->nome == 'B') {
+				mostraPinos(pOri->pilha, pDest->pilha, pAux->pilha);
+			}
+			else {
+				mostraPinos(pOri->pilha, pAux->pilha, pDest->pilha);
+			}
+		}
+		else if (pDest->nome == 'A') {
+			if (pOri->nome == 'B') {
+				mostraPinos(pDest->pilha, pOri->pilha, pAux->pilha);
+			}
+			else {
+				mostraPinos(pDest->pilha, pAux->pilha, pOri->pilha);
+			}
+		}
+		else {
+			if (pOri->nome == 'B') {
+				mostraPinos(pAux->pilha, pOri->pilha, pDest->pilha);
+			}
+			else {
+				mostraPinos(pAux->pilha, pDest->pilha, pOri->pilha);
+			}
+		}
 		solucao(qtdDiscos - 1, pAux, pDest, pOri);
-
 	}
 }
 
 int main() {
-	Pilha * p1 = criar();
-	Pilha * p2 = criar();
-	Pilha * p3 = criar();
+
+	Pino * p1 = malloc(sizeof(Pino));
+	Pino * p2 = malloc(sizeof(Pino));
+	Pino * p3 = malloc(sizeof(Pino));
+
+	p1->pilha = criar();
+	p2->pilha = criar();
+	p3->pilha = criar();
+
+	p1->nome = 'A';
+	p2->nome = 'B';
+	p3->nome = 'C';
+
 	int discos = 0, opcao = 1, origem, destino, i;
 
 	while (opcao != 7) {
 		printf("================================Menu de opcoes================================\n");
 		printf("1\. Inicializar os pinos\n"
-			   "2\. Realizar jogada\n"
-			   "3\. Listar movimentos\n"
-			   "4\. Mostrar solucao\n"
-			   "5\. Mostrar situacao dos pinos\n"
-			   "6\. Reiniciar o jogo\n"
-			   "7\. Sair do programa\n");
+			"2\. Realizar jogada\n"
+			"3\. Listar movimentos\n"
+			"4\. Mostrar solucao\n"
+			"5\. Mostrar situacao dos pinos\n"
+			"6\. Reiniciar o jogo\n"
+			"7\. Sair do programa\n");
 		printf("===============================================================================\n");
 		printf("\nQual opcao do menu deseja executar?\n");
 		scanf("%d", &opcao);
@@ -161,10 +231,10 @@ int main() {
 				printf("Digite a quantidade de discos com que deseja jogar: ");
 				scanf("%d", &discos);
 				for (i = 0; i < discos; i++) {
-					empilhar(p1, discos - i);
+					empilhar(p1->pilha, discos - i);
 				}
 				printf("\n");
-				imprimir(p1);
+				imprimir(p1->pilha);
 			}
 			else {
 				printf("Discos ja inicializados.\n");
@@ -187,33 +257,28 @@ int main() {
 			if (origem == 1) {
 				if (destino == 2) {
 					verificaMovimento(p1, p2, p3, discos);
-					mostraPinos(p1, p2, p3);
 				}
 				else {
 					verificaMovimento(p1, p3, p3, discos);
-					mostraPinos(p1, p2, p3);
 				}
 			}
 			else if (origem == 2) {
 				if (destino == 1) {
 					verificaMovimento(p2, p1, p3, discos);
-					mostraPinos(p1, p2, p3);
 				}
 				else {
 					verificaMovimento(p2, p3, p3, discos);
-					mostraPinos(p1, p2, p3);
 				}
 			}
 			else if (origem == 3) {
 				if (destino == 2) {
 					verificaMovimento(p3, p2, p3, discos);
-					mostraPinos(p1, p2, p3);
 				}
 				else {
 					verificaMovimento(p3, p1, p3, discos);
-					mostraPinos(p1, p2, p3);
 				}
 			}
+			mostraPinos(p1->pilha, p2->pilha, p3->pilha);
 		}
 		else if (opcao == 3) {
 			system("cls");
@@ -222,17 +287,23 @@ int main() {
 				"|   Listar movimentos    |\n"
 				"|                        |\n"
 				"--------------------------\n");
-			mostraPinos(p1, p2, p3);
-			listaMovimentos(p1, p2, p3);
+			mostraPinos(p1->pilha, p2->pilha, p3->pilha);
+			listaMovimentos(p1->pilha, p2->pilha, p3->pilha);
 		}
-		else if (opcao ==4) {
+		else if (opcao == 4) {
 			system("cls");
 			printf("--------------------------\n"
 				"|                        |\n"
 				"|    Mostrar solucao     |\n"
 				"|                        |\n"
 				"--------------------------\n");
+			reiniciarJogo(p1->pilha, p2->pilha, p3->pilha, discos);
+			printf("\n");
 			solucao(discos, p1, p3, p2);
+			mostraPinos(p1->pilha, p2->pilha, p3->pilha);
+			printf("\n\nParabens jogo finalizado. E sera reiniciado.\n");
+			reiniciarJogo(p1->pilha, p2->pilha, p3->pilha, discos);
+
 		}
 		else if (opcao == 5) {
 			system("cls");
@@ -241,7 +312,7 @@ int main() {
 				"|   Situacao dos pinos   |\n"
 				"|                        |\n"
 				"--------------------------\n");
-			mostraPinos(p1, p2, p3);
+			mostraPinos(p1->pilha, p2->pilha, p3->pilha);
 		}
 		else if (opcao == 6) {
 			system("cls");
@@ -250,8 +321,8 @@ int main() {
 				"|    Jogo reiniciado     |\n"
 				"|                        |\n"
 				"--------------------------\n");
-			reiniciarJogo(p1, p2, p3, discos);
-			mostraPinos(p1, p2, p3);
+			reiniciarJogo(p1->pilha, p2->pilha, p3->pilha, discos);
+			mostraPinos(p1->pilha, p2->pilha, p3->pilha);
 		}
 		else if (opcao == 7) {
 			system("cls");

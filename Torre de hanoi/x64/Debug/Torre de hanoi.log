@@ -1,11 +1,12 @@
 ﻿  Principal.c
-c:\dev\visual studio\projects\torredehanoi\torre de hanoi\principal.c(143): warning C4129: '.': unrecognized character escape sequence
-c:\dev\visual studio\projects\torredehanoi\torre de hanoi\principal.c(144): warning C4129: '.': unrecognized character escape sequence
-c:\dev\visual studio\projects\torredehanoi\torre de hanoi\principal.c(145): warning C4129: '.': unrecognized character escape sequence
-c:\dev\visual studio\projects\torredehanoi\torre de hanoi\principal.c(146): warning C4129: '.': unrecognized character escape sequence
-c:\dev\visual studio\projects\torredehanoi\torre de hanoi\principal.c(147): warning C4129: '.': unrecognized character escape sequence
-c:\dev\visual studio\projects\torredehanoi\torre de hanoi\principal.c(148): warning C4129: '.': unrecognized character escape sequence
-c:\dev\visual studio\projects\torredehanoi\torre de hanoi\principal.c(149): warning C4129: '.': unrecognized character escape sequence
-c:\dev\visual studio\projects\torredehanoi\torre de hanoi\principal.c(261): warning C4013: 'getch' undefined; assuming extern returning int
+c:\dev\visual studio\projects\torredehanoi\torre de hanoi\principal.c(213): warning C4129: '.': unrecognized character escape sequence
+c:\dev\visual studio\projects\torredehanoi\torre de hanoi\principal.c(214): warning C4129: '.': unrecognized character escape sequence
+c:\dev\visual studio\projects\torredehanoi\torre de hanoi\principal.c(215): warning C4129: '.': unrecognized character escape sequence
+c:\dev\visual studio\projects\torredehanoi\torre de hanoi\principal.c(216): warning C4129: '.': unrecognized character escape sequence
+c:\dev\visual studio\projects\torredehanoi\torre de hanoi\principal.c(217): warning C4129: '.': unrecognized character escape sequence
+c:\dev\visual studio\projects\torredehanoi\torre de hanoi\principal.c(218): warning C4129: '.': unrecognized character escape sequence
+c:\dev\visual studio\projects\torredehanoi\torre de hanoi\principal.c(219): warning C4129: '.': unrecognized character escape sequence
+c:\dev\visual studio\projects\torredehanoi\torre de hanoi\principal.c(332): warning C4013: 'getch' undefined; assuming extern returning int
+  LINK : C:\Dev\Visual Studio\Projects\torreDeHanoi\x64\Debug\Torre de hanoi.exe not found or not built by the last incremental link; performing full link
   Torre de hanoi.vcxproj -> C:\Dev\Visual Studio\Projects\torreDeHanoi\x64\Debug\Torre de hanoi.exe
   Torre de hanoi.vcxproj -> C:\Dev\Visual Studio\Projects\torreDeHanoi\x64\Debug\Torre de hanoi.pdb (Partial PDB)

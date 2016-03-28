@@ -7,6 +7,3 @@ void empilhar(Pilha * p, int x); // ou push
 int tamanho(Pilha * p);
 int topo(Pilha * p);
 void imprimir(Pilha * p);
-void inverter3(Pilha * p);
-Pilha * clonar(Pilha * p);
-int compIgual(Pilha * p1, Pilha * p2);

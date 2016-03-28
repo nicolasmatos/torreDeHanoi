@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include "Pilha.h"
 
-
 struct pino {
 	Pilha * pilha;
 	char nome;
@@ -13,22 +12,17 @@ typedef struct pino Pino;
 
 void reiniciarJogo(Pilha * p1, Pilha * p2, Pilha * p3, int qtdDiscos) {
 	int i;
-	if (qtdDiscos != 0) {
-		while (tamanho(p1) != 0) {
-			desempilhar(p1);
-		}
-		while (tamanho(p2) != 0) {
-			desempilhar(p2);
-		}
-		while (tamanho(p3) != 0) {
-			desempilhar(p3);
-		}
-		for (i = 0; i < qtdDiscos; i++) {
-			empilhar(p1, qtdDiscos - i);
-		}
+	while (tamanho(p1) != 0) {
+		desempilhar(p1);
 	}
-	else {
-		printf("Os discos ainda nao foram inicializados.\n");
+	while (tamanho(p2) != 0) {
+		desempilhar(p2);
+	}
+	while (tamanho(p3) != 0) {
+		desempilhar(p3);
+	}
+	for (i = 0; i < qtdDiscos; i++) {
+		empilhar(p1, qtdDiscos - i);
 	}
 }
 
@@ -53,7 +47,7 @@ void verificaMovimento(Pino * pOri, Pino * pDest, Pino * pAux, int numDiscos) {
 		printf("\nMovimento invalido.\n\n");
 	}
 
-	if (tamanho(pDest->pilha) == numDiscos /*&& pDest->pilha == pAux->pilha*/) {
+	if (tamanho(pDest->pilha) == numDiscos && pDest->pilha == pAux->pilha) {
 		printf("Parabens jogo finalizado. E sera reiniciado.\n");
 		if (pOri->nome == 'A') {
 			if (pDest->nome == 'B') {
@@ -134,6 +128,7 @@ void mostraSolucao(int qtdDiscos, Pino * pOri, Pino * pDest, Pino * pAux) {
 	}
 	else {
 		mostraSolucao(qtdDiscos - 1, pOri, pAux, pDest);
+
 		if (pOri->nome == 'A') {
 			if (pDest->nome == 'B') {
 				mostraPinos(pOri->pilha, pDest->pilha, pAux->pilha);
@@ -158,7 +153,9 @@ void mostraSolucao(int qtdDiscos, Pino * pOri, Pino * pDest, Pino * pAux) {
 				mostraPinos(pAux->pilha, pDest->pilha, pOri->pilha);
 			}
 		}
+
 		empilhar(pDest->pilha, desempilhar(pOri->pilha));
+
 		printf("Mover do pino %c para o pino %c\n", pOri->nome, pDest->nome);
 		if (pOri->nome == 'A') {
 			if (pDest->nome == 'B') {
@@ -184,6 +181,7 @@ void mostraSolucao(int qtdDiscos, Pino * pOri, Pino * pDest, Pino * pAux) {
 				mostraPinos(pAux->pilha, pDest->pilha, pOri->pilha);
 			}
 		}
+
 		mostraSolucao(qtdDiscos - 1, pAux, pDest, pOri);
 	}
 }
